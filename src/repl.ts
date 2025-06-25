@@ -18,6 +18,7 @@ export function startREPL(state: State) {
         }
         
         const cmd = state.commands[ci[0]];
+        const args = ci.splice(1);
         if (!cmd) {
             console.log(`Unknown command: "${ci[0]}". Type "help" for a list of commands.`,);
             state.readline.prompt();
@@ -25,7 +26,7 @@ export function startREPL(state: State) {
             }
             
         try {
-            const res = await cmd.callback(state);
+            const res = await cmd.callback(state, ...args);
         } catch (e) {
             console.log(e);
         }
