@@ -102,7 +102,7 @@ export type Location = {
     name: string;
     region: NamedAPIResource;
     names: Name[];
-    game_indices: {game_index: number; generation: NamedAPIResource}[];
+    game_indices: { game_index: number; generation: NamedAPIResource }[];
     areas: NamedAPIResource[];
 
 }
@@ -134,19 +134,66 @@ export type Pokemon = {
     is_default: boolean;
     order: number;
     weight: number;
-/*     abilities: PokemonAbility;
-    forms: NamedAPIResource;
-    game_indices: VersionGameIndex;
-    held_items: PokemonHeldItem;
+    abilities: {
+        is_hidden: boolean;
+        slot: number;
+        ability: NamedAPIResource
+    }[];
+    forms: NamedAPIResource[];
+    game_indices: {
+        game_index: number;
+        version: NamedAPIResource;
+    }[];
+    held_items: {
+        item: NamedAPIResource;
+        version_details: {
+            version: NamedAPIResource;
+            rarity: number;
+        }[];
+    }[];
     location_area_encounters: string;
-    moves: PokemonMove[];
-    past_types: PokemonTypePast[];
-    past_abilities: PokemonAbilityPast;
-    sprites: PokemonSprites;
-    cries: PokemonCries;
+    moves: {
+        move: NamedAPIResource;
+        version_group_details: {
+            move_learn_method: NamedAPIResource;
+            version_group: NamedAPIResource;
+            level_learned_at: number;
+            order: number;
+        }[];
+    }[];
+    past_types: {
+        generation: NamedAPIResource;
+        types: PokemonType[];
+    }[];
+    past_abilities: {
+        generation: NamedAPIResource;
+        abilities: {
+            is_hidden: boolean;
+            slot: number;
+            ability: NamedAPIResource
+        }[]
+    }[];
+    sprites: {
+        front_default: string;
+        front_shiny: string;
+        front_female: string;
+        front_shiny_female: string;
+        back_default: string;
+        back_shiny: string;
+        back_female: string;
+        back_shiny_female: string;
+    };
+    cries: {
+        latest: string;
+        legacy: string;
+    };
     species: NamedAPIResource;
-    stats: PokemonStat[];
-    types: PokemonType[]; */
+    stats: {
+        stat: NamedAPIResource;
+        effort: number;
+        base_stat: number;
+    }[];
+    types: PokemonType[];
 }
 
 type NamedAPIResource = {
@@ -171,4 +218,9 @@ type Encounter = {
     condition_values: NamedAPIResource[];
     chance: number;
     method: NamedAPIResource;
+}
+
+type PokemonType = {
+    slot: number;
+    type: NamedAPIResource;
 }
