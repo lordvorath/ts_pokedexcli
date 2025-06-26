@@ -68,6 +68,26 @@ export class PokeAPI {
             throw e;
         }
     }
+
+    async fetchPokemon(pokemon: string): Promise<Pokemon> {
+        const url = `${PokeAPI.baseURL}/pokemon/${pokemon}`;
+        const a = this.cache.get<Pokemon>(url)
+        if (a) {
+            return a;
+        }
+        const response = await fetch(url,
+            {
+                method: "GET",
+            }
+        );
+        try {
+            const data = response.json()
+            this.cache.add(url, data);
+            return data;
+        } catch (e) {
+            throw e;
+        }
+    }
 }
 
 export type ShallowLocations = {
@@ -104,6 +124,29 @@ export type LocationArea = {
         pokemon: NamedAPIResource,
         version_details: VersionEncounterDetail[]
     }[];
+}
+
+export type Pokemon = {
+    id: number;
+    name: string;
+    base_experience: number;
+    height: number;
+    is_default: boolean;
+    order: number;
+    weight: number;
+/*     abilities: PokemonAbility;
+    forms: NamedAPIResource;
+    game_indices: VersionGameIndex;
+    held_items: PokemonHeldItem;
+    location_area_encounters: string;
+    moves: PokemonMove[];
+    past_types: PokemonTypePast[];
+    past_abilities: PokemonAbilityPast;
+    sprites: PokemonSprites;
+    cries: PokemonCries;
+    species: NamedAPIResource;
+    stats: PokemonStat[];
+    types: PokemonType[]; */
 }
 
 type NamedAPIResource = {
